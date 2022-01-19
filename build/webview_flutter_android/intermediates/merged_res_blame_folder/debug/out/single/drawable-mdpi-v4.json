@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/Users/softqube/Desktop/Palak/junagadh_temple/build/webview_flutter_android/intermediates/merged_res/debug/drawable-mdpi-v4/notification_bg_normal_pressed.9.png",
+        "source": "/Users/softqube/.gradle/caches/transforms-3/5fc8a1398f9a0d8448b6776cb6c51500/transformed/core-1.1.0/res/drawable-mdpi-v4/notification_bg_normal_pressed.9.png"
+    },
+    {
+        "merged": "/Users/softqube/Desktop/Palak/junagadh_temple/build/webview_flutter_android/intermediates/merged_res/debug/drawable-mdpi-v4/notify_panel_notification_icon_bg.png",
+        "source": "/Users/softqube/.gradle/caches/transforms-3/5fc8a1398f9a0d8448b6776cb6c51500/transformed/core-1.1.0/res/drawable-mdpi-v4/notify_panel_notification_icon_bg.png"
+    },
+    {
+        "merged": "/Users/softqube/Desktop/Palak/junagadh_temple/build/webview_flutter_android/intermediates/merged_res/debug/drawable-mdpi-v4/notification_bg_low_normal.9.png",
+        "source": "/Users/softqube/.gradle/caches/transforms-3/5fc8a1398f9a0d8448b6776cb6c51500/transformed/core-1.1.0/res/drawable-mdpi-v4/notification_bg_low_normal.9.png"
+    },
+    {
+        "merged": "/Users/softqube/Desktop/Palak/junagadh_temple/build/webview_flutter_android/intermediates/merged_res/debug/drawable-mdpi-v4/notification_bg_low_pressed.9.png",
+        "source": "/Users/softqube/.gradle/caches/transforms-3/5fc8a1398f9a0d8448b6776cb6c51500/transformed/core-1.1.0/res/drawable-mdpi-v4/notification_bg_low_pressed.9.png"
+    },
+    {
+        "merged": "/Users/softqube/Desktop/Palak/junagadh_temple/build/webview_flutter_android/intermediates/merged_res/debug/drawable-mdpi-v4/notification_bg_normal.9.png",
+        "source": "/Users/softqube/.gradle/caches/transforms-3/5fc8a1398f9a0d8448b6776cb6c51500/transformed/core-1.1.0/res/drawable-mdpi-v4/notification_bg_normal.9.png"
+    }
+]

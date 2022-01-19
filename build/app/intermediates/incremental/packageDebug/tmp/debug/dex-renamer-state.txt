@@ -1,0 +1,4 @@
+#Wed Jan 19 12:55:19 IST 2022
+base.0=/Users/softqube/Desktop/Palak/junagadh_temple/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex
