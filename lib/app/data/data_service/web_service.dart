@@ -1,20 +1,36 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:junagadh_temple/app/data/data_service/server_configs.dart';
 
 class WebService{
   var dio = Dio();
 
   static final shared = WebService();
 
-  Future<Map<String, dynamic>?> getApiDIO(String url) async {
+  Future<Map<String, dynamic>?> getApiDIO(String path) async {
 
     try{
-      Response<Map<String, dynamic>> cool = await dio.get<Map<String, dynamic>>(url);
+      // If api is for array then go with this logic else if it is only json object then dont convert it into array just convert it into Map object
+      print('URL: ' + ServerConfigs.baseURL + path);
 
-      print('Res: ${cool.data}');
+      Response cool = await dio.get(ServerConfigs.baseURL + path);
 
-      return handleResponse(cool);
+      final data = cool.data as List; // if the response is in array
+
+      final serviceData =  data.first as Map<String, dynamic>;
+
+      print('Res: ${serviceData['response']}');//DOne your response is here
+
+      try{
+        if ((cool.statusCode ?? 0) >= 200 && (cool.statusCode ?? 0) < 300) {
+          return serviceData['response'];
+        }else{
+          throw 'Error occurred while Communication with Server, with StatusCode : ${cool.statusCode}';
+        }
+      }catch (e){
+        rethrow;
+      }
 
     } on SocketException {
       throw 'No Internet connection';
@@ -38,6 +54,52 @@ class WebService{
     }
 
   }
+
+
+  Future<Map<String, dynamic>?> getApiResponseDIO(
+      {required String path, Map<String, dynamic>? queryParameters}) async {
+    try {
+
+      print('URL: ' + ServerConfigs.baseURL + path);
+
+      // final user = await UserPrefs.shared.getUser;
+      //
+      // print('token : Bearer ${user.token}');
+
+      final req = Response(
+          data: queryParameters, requestOptions: RequestOptions(path: ''));
+
+      print('queryParam: $req');
+
+      Response<Map<String, dynamic>> cool = await dio.get<Map<String, dynamic>>(
+          ServerConfigs.baseURL + path,
+          queryParameters: queryParameters,);
+
+      print('Res: $cool');
+
+      return handleResponse(cool);
+    } on SocketException {
+      throw 'No Internet connection';
+    } on DioError catch (e) {
+      switch (e.type) {
+        case DioErrorType.connectTimeout:
+          throw 'Connection timeOut';
+        case DioErrorType.sendTimeout:
+          throw 'Connection timeOut';
+        case DioErrorType.receiveTimeout:
+          throw 'Connection timeOut';
+        case DioErrorType.response:
+          throw 'Something went wrong.';
+        case DioErrorType.cancel:
+          throw 'Request Canceled by user';
+        case DioErrorType.other:
+          throw 'Something went wrong.';
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
 
   Map<String, dynamic>? handleResponse(Response<Map<String, dynamic>> cool){
     try{
