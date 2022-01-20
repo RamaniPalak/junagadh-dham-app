@@ -1,35 +1,55 @@
 
 import 'package:junagadh_temple/app/data/entity/home_entity.dart';
+import 'package:junagadh_temple/app/data/entity/res_homeslider.dart';
 import 'package:junagadh_temple/app/providers/base_notifier.dart';
 import 'package:junagadh_temple/app/repository/home_repo.dart';
 import 'package:junagadh_temple/app/utils/api_response.dart';
 import 'package:junagadh_temple/app/utils/enums.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
-class HomeProvider extends BaseNotifier{
 
-  HomeRepository repo;
 
-  ApiResponse<Welcome>? _res;
+class HomeProvider {
 
-  ApiResponse<Welcome>? get res => _res;
 
-  HomeProvider(this.repo){
+  Future getSlider() async {}
+
+
+}
+
+class HomeProviderImpl extends BaseNotifier implements HomeProvider{
+
+  late HomeRepository repo;
+
+  Future<PackageInfo> get packageInfo async => await PackageInfo.fromPlatform();
+
+  HomeProviderImpl(this.repo){
     _res = ApiResponse();
-    _res!.state = Status.LOADING;
   }
 
-  Future getRes() async {
-    try{
+  ApiResponse<ResHomeSlider>? _res;
 
-      apiResIsLoading(res!);
+  ApiResponse<ResHomeSlider>? get res => _res;
 
-      final welcome = await repo.getData();
 
-      apiResIsSuccess<Welcome>(res!, welcome);
 
-    }catch (e){
+  @override
+  Future getSlider() async {
+    try {
+      apiResIsLoading(_res!);
+
+      final res = await repo.getSlider();
+      print('DATA:');
+      print(res.data?.imageurl);
+
+      if (res.status != 1) {
+        apiResIsFailed(_res!, res.message ?? '');
+      } else {
+        apiResIsSuccess(_res!, res);
+      }
+    } catch (e) {
       print(e);
-      apiResIsFailed(res! , e);
+      apiResIsFailed(_res!, e.toString());
     }
   }
 

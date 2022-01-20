@@ -1,20 +1,23 @@
+import 'package:junagadh_temple/app/data/data_service/server_configs.dart';
 import 'package:junagadh_temple/app/data/data_service/web_service.dart';
-import 'package:junagadh_temple/app/data/entity/home_entity.dart';
+import 'package:junagadh_temple/app/data/entity/res_homeslider.dart';
 
 abstract class HomeData{
 
-  Future<Welcome> get();
+  Future<ResHomeSlider> getSlider();
 
 }
 
 
 class HomeDataImpl implements HomeData{
   @override
-  Future<Welcome> get() async {
+  Future<ResHomeSlider> getSlider() async {
 
-    final res = await WebService.shared.getApiDIO("https://jsonplaceholder.typicode.com/todos/1");
+    final res = await WebService.shared.getApiDIO('${ServerConfigs.homeSlider}');
+    print(res);
 
-    return Welcome.fromJson(res);
+    return ResHomeSlider.fromJson(res!);
 
   }
+
 }

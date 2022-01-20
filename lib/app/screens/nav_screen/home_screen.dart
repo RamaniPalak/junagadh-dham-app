@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:junagadh_temple/app/components/image_components.dart';
 import 'package:junagadh_temple/app/components/indicator_ccomponents.dart';
+import 'package:junagadh_temple/app/providers/home_provider.dart';
 import 'package:junagadh_temple/app/screens/notification/notification_screen.dart';
 import 'package:junagadh_temple/app/screens/timing/timing_screen.dart';
 import 'package:junagadh_temple/app/utils/constants.dart';
@@ -10,6 +11,7 @@ import 'package:junagadh_temple/app/utils/sizer.dart';
 import 'dart:ui' as ui;
 
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _pages = [
     Container(
-     child: sliderImage,
+      color: Colors.blueGrey,
     ),
     Container(
       color: Colors.blueGrey,
@@ -36,6 +38,16 @@ class _HomeScreenState extends State<HomeScreen> {
       color: Colors.brown,
     ),
   ];
+
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      context.read<HomeProviderImpl>().getSlider();
+      print('cool');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,31 +151,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 style: kImgTitle,
               ),
             ),
-            Padding(
-              padding:  EdgeInsets.only(top: 3.h,left: 4.w,right: 4.w),
-              child: Container(
-                height: 23.h,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5)
-              ),
-                child: PageView.builder(
-                  onPageChanged: _pageChanged,
-                  scrollDirection: Axis.horizontal,
-                  controller: _pageController,
-                  itemCount: _pages.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return _pages[index];
-                  },
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 1.h),
-              child: Indicator(
-                controller: _pageController,
-                itemCount: _pages.length,
-              ),
-            ),
+                 homeSlider(),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 2.h),
               child: SizedBox(width: 90.w, child: designImage),
@@ -193,4 +181,47 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  Widget homeSlider(){
+
+    final slider = context.watch<HomeProviderImpl>();
+    final data = slider.res?.data?.data;
+    print('data1:${data?.imageurl}');
+
+
+    return Column(
+      children: [
+        Padding(
+          padding:  EdgeInsets.only(top: 3.h,left: 4.w,right: 4.w),
+          child: Container(
+            width: 89.w,
+            height: 20.h,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5)
+            ),
+            child: PageView.builder(
+              onPageChanged: _pageChanged,
+              scrollDirection: Axis.horizontal,
+              controller: _pageController,
+              itemCount: data?.imageurl?.length,
+              itemBuilder: (BuildContext context, int index) {
+                print(data?.imageurl?[index]); // AA vastu image ni url ma vapr vani
+                return Container(
+                  child: Image.network('${data?.imageurl?[index]}'),
+                );
+              },
+            ),
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.only(top: 1.h),
+          child: Indicator(
+            controller: _pageController,
+            itemCount: data?.imageurl?.length ?? 0,
+          ),
+        ),
+      ],
+    );
+  }
+
 }

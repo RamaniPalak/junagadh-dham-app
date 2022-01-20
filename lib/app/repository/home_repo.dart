@@ -2,6 +2,7 @@
 
 import 'package:junagadh_temple/app/data/datasource/home_data.dart';
 import 'package:junagadh_temple/app/data/entity/home_entity.dart';
+import 'package:junagadh_temple/app/data/entity/res_homeslider.dart';
 
 class HomeRepository{
 
@@ -9,8 +10,8 @@ class HomeRepository{
 
   HomeRepository({required this.dataSource});
 
-  Future<Welcome> getData() async {
-    return await dataSource.get();
+  Future<ResHomeSlider> getSlider() async {
+    return await dataSource.getSlider();
   }
 
 }
