@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:junagadh_temple/app/providers/home_provider.dart';
 import 'package:junagadh_temple/app/screens/notification/notification_screen.dart';
 import 'package:junagadh_temple/app/utils/constants.dart';
+import 'package:junagadh_temple/app/utils/enums.dart';
 import 'package:junagadh_temple/app/utils/sizer.dart';
 import 'package:junagadh_temple/app/views/bg_container.dart';
 import 'package:junagadh_temple/app/views/common_images.dart';
+import 'package:junagadh_temple/app/views/loading_small.dart';
+import 'package:provider/provider.dart';
 
 class TimingScreen extends StatefulWidget {
   const TimingScreen({Key? key}) : super(key: key);
@@ -13,8 +17,29 @@ class TimingScreen extends StatefulWidget {
 }
 
 class _TimingScreenState extends State<TimingScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      context.read<HomeProviderImpl>().getTiming();
+    });
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
+
+   final time = context.watch<HomeProviderImpl>();
+   final data = time.resTime?.data?.data;
+
+   if(time.resTime?.state == Status.LOADING){
+     return LoadingSmall();
+   }
+
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
@@ -63,7 +88,7 @@ class _TimingScreenState extends State<TimingScreen> {
                     itemBuilder: (context, index) {
                       return ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: 3 + 2,
+                        itemCount: (data?.morningTiming?.length ?? 0) + 2,
                         shrinkWrap: true,
                       //  padding: EdgeInsets.only(bottom: 3.w),
                         itemBuilder: (context, index) {
@@ -92,7 +117,7 @@ class _TimingScreenState extends State<TimingScreen> {
                                   border: Border(bottom: BorderSide(color: Colors.black,width: 0.1.h))
                               ),
                             );
-                          }else if(index == 4){ // TODO:- Change the position 4 wth (item.length - 1)
+                          }else if(index == (data?.morningTiming?.length ?? 0) +1){ // TODO:- Change the position 4 wth (item.length - 1)
                             //Footer
                             return Container(
                               padding: EdgeInsets.only(bottom: 1.3.h,top: 1.3.h,left: 2.w,right: 2.w),
@@ -101,7 +126,7 @@ class _TimingScreenState extends State<TimingScreen> {
                                 children: [
                                   Expanded(
                                     flex: 5,
-                                    child: Text('Darshan Closed (Noon)',style: TextStyle(
+                                    child: Text('${data?.darshanClosed?.darshanCloseTitel ?? '-'}',style: TextStyle(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 15.sp,
                                         color: Colors.black
@@ -109,7 +134,7 @@ class _TimingScreenState extends State<TimingScreen> {
                                   ),
                                   Expanded(
                                     flex: 3,
-                                    child: Text('12:00 to 03:00',style: TextStyle(
+                                    child: Text('${data?.darshanClosed?.darshanCloseTime ?? '-'}',style: TextStyle(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 15.sp,
                                         color: Colors.black
@@ -123,6 +148,8 @@ class _TimingScreenState extends State<TimingScreen> {
                             );
                           }
 
+                          final morningData = data?.morningTiming?[index -1];
+
                           return Container(
                             padding: EdgeInsets.only(bottom: 1.3.h,top: 1.3.h),
                             child: Row(
@@ -130,7 +157,7 @@ class _TimingScreenState extends State<TimingScreen> {
                               children: [
                                 Expanded(
                                   flex: 5,
-                                  child: Text('Mangala Aarti',style: TextStyle(
+                                  child: Text('${morningData?.aartiName ?? '-'}',style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 15.sp,
                                       color: Colors.black
@@ -138,7 +165,7 @@ class _TimingScreenState extends State<TimingScreen> {
                                 ),
                                 Expanded(
                                   flex: 2,
-                                  child: Text('05:30 PM',style: TextStyle(
+                                  child: Text('${morningData?.aartiTime ?? '-'}',style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 15.sp,
                                       color: Colors.black
@@ -160,7 +187,7 @@ class _TimingScreenState extends State<TimingScreen> {
                     itemBuilder: (context, index) {
                       return ListView.builder(
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: 1 + 2,
+                        itemCount: (data?.eveningTiming?.length ?? 0) + 2,
                         shrinkWrap: true,
                         padding: EdgeInsets.only(bottom: 3.w),
                         itemBuilder: (context, index) {
@@ -189,7 +216,7 @@ class _TimingScreenState extends State<TimingScreen> {
                                   border: Border(bottom: BorderSide(color: Colors.black,width: 0.1.h))
                               ),
                             );
-                          }else if(index == 2){ // TODO:- Change the position 4 wth (item.length - 1)
+                          }else if(index == (data?.eveningTiming?.length ?? 0) +1){ // TODO:- Change the position 4 wth (item.length - 1)
                             //Footer
                             return Container(
                               padding: EdgeInsets.only(bottom: 1.3.h,top: 1.3.h,left: 2.w,right: 2.w),
@@ -198,7 +225,7 @@ class _TimingScreenState extends State<TimingScreen> {
                                 children: [
                                   Expanded(
                                     flex: 4,
-                                    child: Text('Shayan Darshan Closed (Night)',style: TextStyle(
+                                    child: Text('${data?.shayanDarshanClosed?.shayanDarshanTitle ?? '-'}',style: TextStyle(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 15.sp,
                                         color: Colors.black
@@ -206,7 +233,7 @@ class _TimingScreenState extends State<TimingScreen> {
                                   ),
                                   Expanded(
                                     flex: 2,
-                                    child: Text('12:00 to 03:00',style: TextStyle(
+                                    child: Text('${data?.shayanDarshanClosed?.shayanDarshanTime ?? '-'}',style: TextStyle(
                                         fontWeight: FontWeight.w700,
                                         fontSize: 15.sp,
                                         color: Colors.black
@@ -227,7 +254,7 @@ class _TimingScreenState extends State<TimingScreen> {
                               children: [
                                 Expanded(
                                   flex: 5,
-                                  child: Text('Sandhya Aarti',style: TextStyle(
+                                  child: Text('${data?.eveningTiming?[index -1].aartiName ?? '-'}',style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 15.sp,
                                       color: Colors.black
@@ -235,7 +262,7 @@ class _TimingScreenState extends State<TimingScreen> {
                                 ),
                                 Expanded(
                                   flex: 2,
-                                  child: Text('05:30 PM',style: TextStyle(
+                                  child: Text('${data?.eveningTiming?[index -1].aartiTime ?? '-'}',style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 15.sp,
                                       color: Colors.black

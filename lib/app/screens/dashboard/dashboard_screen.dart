@@ -32,51 +32,49 @@ class _DashboardScreenState extends State<DashboardScreen> {
     DonationScreen(),
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bg2,
-      body: IndexedStack(index: selectedPage,
-          children: [
-            Navigator(
-              key: _page1,
-              onGenerateRoute: (route) => MaterialPageRoute(
-                settings: route,
-                builder: (context) =>  HomeScreen(),
-              ),
-            ),
-            Navigator(
-              key: _page2,
-              onGenerateRoute: (route) => MaterialPageRoute(
-                settings: route,
-                builder: (context) => const DarshanScreen(),
-              ),
-            ),
-            Navigator(
-              key: _page3,
-              onGenerateRoute: (route) => MaterialPageRoute(
-                settings: route,
-                builder: (context) => const GalleryScreen(),
-              ),
-            ),
-            Navigator(
-              key: _page4,
-              onGenerateRoute: (route) => MaterialPageRoute(
-                settings: route,
-                builder: (context) => const EventScreen(),
-              ),
-            ),
-            Navigator(
-              key: _page5,
-              onGenerateRoute: (route) => MaterialPageRoute(
-                settings: route,
-                builder: (context) => const DonationScreen(),
-              ),
-            ),
-            //_pageOptions[selectedPage]],
-            ]     //
-              ),
+      body: IndexedStack(index: selectedPage, children: [
+        Navigator(
+          key: _page1,
+          onGenerateRoute: (route) => MaterialPageRoute(
+            settings: route,
+            builder: (context) => HomeScreen(),
+          ),
+        ),
+        Navigator(
+          key: _page2,
+          onGenerateRoute: (route) => MaterialPageRoute(
+            settings: route,
+            builder: (context) => const DarshanScreen(),
+          ),
+        ),
+        Navigator(
+          key: _page3,
+          onGenerateRoute: (route) => MaterialPageRoute(
+            settings: route,
+            builder: (context) => const GalleryScreen(),
+          ),
+        ),
+        Navigator(
+          key: _page4,
+          onGenerateRoute: (route) => MaterialPageRoute(
+            settings: route,
+            builder: (context) => const EventScreen(),
+          ),
+        ),
+        Navigator(
+          key: _page5,
+          onGenerateRoute: (route) => MaterialPageRoute(
+            settings: route,
+            builder: (context) => const DonationScreen(),
+          ),
+        ),
+        //_pageOptions[selectedPage]],
+      ] //
+          ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
         width: 18.w,
@@ -84,8 +82,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         color: Colors.transparent,
         child: FloatingActionButton(
           onPressed: () {
-            // Navigator.of(context).push(
-            //     MaterialPageRoute(builder: (context) => DonationScreen()));
+            Navigator.popUntil(_page5.currentContext ?? context, (route) {
+              return route.isFirst;
+            });
             setState(() {
               selectedPage = 4;
             });
@@ -113,6 +112,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     selectedPage == 0 ? kPrimaryColor : greyColor,
                   ),
                   onTap: () {
+                    Navigator.popUntil(_page1.currentContext ?? context,
+                        (route) {
+                      return route.isFirst;
+                    });
                     setState(() {
                       selectedPage = 0;
                     });
@@ -124,6 +127,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     selectedPage == 1 ? kPrimaryColor : greyColor,
                   ),
                   onTap: () {
+                    Navigator.popUntil(_page2.currentContext ?? context,
+                        (route) {
+                      return route.isFirst;
+                    });
                     setState(() {
                       selectedPage = 1;
                     });
@@ -136,6 +143,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     selectedPage == 2 ? kPrimaryColor : greyColor,
                   ),
                   onTap: () {
+                    Navigator.popUntil(_page3.currentContext ?? context,
+                        (route) {
+                      return route.isFirst;
+                    });
                     setState(() {
                       selectedPage = 2;
                     });
@@ -147,6 +158,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     selectedPage == 3 ? kPrimaryColor : greyColor,
                   ),
                   onTap: () {
+                    Navigator.popUntil(_page4.currentContext ?? context,
+                        (route) {
+                      return route.isFirst;
+                    });
+
                     setState(() {
                       selectedPage = 3;
                     });

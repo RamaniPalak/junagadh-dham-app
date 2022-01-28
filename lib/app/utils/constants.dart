@@ -8,7 +8,7 @@ Color bg1 = const Color(0xffD3BA9D);
 Color bg2 = const Color(0xffEBD6BC).withOpacity(0.98);
 Color kLightYellow = const Color(0xffF1D398);
 Color greyColor = const Color(0xff666666);
-Color dividerColor = Color(0xff949494);
+Color dividerColor = const Color(0xff949494);
 
 //Routes
 String kInitialRoute = '/';

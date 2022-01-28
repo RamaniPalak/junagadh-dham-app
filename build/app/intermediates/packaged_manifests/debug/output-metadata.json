@@ -4,7 +4,7 @@
     "type": "PACKAGED_MANIFESTS",
     "kind": "Directory"
   },
-  "applicationId": "com.example.junagadh_temple",
+  "applicationId": "com.softqube.junagadh_temple",
   "variantName": "debug",
   "elements": [
     {

@@ -13,12 +13,12 @@ abstract class BaseScreen {
       required BuildContext context,
       Function? retryCall}) {
     if (res.state == Status.UNAUTHORISED) {
-      CustomPopup(context,
-          title: 'Un-Authorised',
-          message: '${res.msg}',
-          primaryBtnTxt: 'Re-try', primaryAction: () {
-        context.read<AuthProviderImpl>().unAuthorizeUser();
-      });
+      // CustomPopup(context,
+      //     title: 'Un-Authorised',
+      //     message: '${res.msg}',
+      //     primaryBtnTxt: 'Re-try', primaryAction: () {
+      //   context.read<AuthProviderImpl>().unAuthorizeUser();
+      // });
       return false;
     } else if (res.state == Status.ERROR) {
       if (retryCall == null) {
@@ -29,8 +29,9 @@ abstract class BaseScreen {
             title: 'Sorry!',
             message: '${res.msg}',
             primaryBtnTxt: 'Re-try',
-            secondaryBtnTxt: 'Cancel',
-            primaryAction: retryCall);
+            secondaryBtnTxt: 'Cancel'
+          //  primaryAction: retryCall
+        );
       }
       return false;
     } else {

@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/softqube/Desktop/Palak/junagadh_temple/build/shared_preferences_android/intermediates/merged_res/debug/values-uk/values-uk.xml",
+            "outputFile": "/Users/softqube/Desktop/Palak/junagadh-dham-app/build/shared_preferences_android/intermediates/incremental/mergeDebugResources/merged.dir/values-uk/values-uk.xml",
             "map": [
                 {
-                    "source": "/Users/softqube/.gradle/caches/transforms-3/5fc8a1398f9a0d8448b6776cb6c51500/transformed/core-1.1.0/res/values-uk/values-uk.xml",
+                    "source": "/Users/softqube/.gradle/caches/transforms-3/96272f70da1055584f874a450aec6d83/transformed/core-1.6.0/res/values-uk/values-uk.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
@@ -16,10 +16,10 @@
             ]
         },
         {
-            "outputFile": "/Users/softqube/Desktop/Palak/junagadh_temple/build/shared_preferences_android/intermediates/incremental/mergeDebugResources/merged.dir/values-uk/values-uk.xml",
+            "outputFile": "/Users/softqube/Desktop/Palak/junagadh-dham-app/build/shared_preferences_android/intermediates/merged_res/debug/values-uk/values-uk.xml",
             "map": [
                 {
-                    "source": "/Users/softqube/.gradle/caches/transforms-3/5fc8a1398f9a0d8448b6776cb6c51500/transformed/core-1.1.0/res/values-uk/values-uk.xml",
+                    "source": "/Users/softqube/.gradle/caches/transforms-3/96272f70da1055584f874a450aec6d83/transformed/core-1.6.0/res/values-uk/values-uk.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

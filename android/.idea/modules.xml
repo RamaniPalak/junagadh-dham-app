@@ -4,7 +4,11 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/android.iml" filepath="$PROJECT_DIR$/.idea/modules/android.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/android.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/android.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/2065248780/android.package_info_plus.iml" filepath="$PROJECT_DIR$/.idea/modules/2065248780/android.package_info_plus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1810040003/android.path_provider_android.iml" filepath="$PROJECT_DIR$/.idea/modules/-1810040003/android.path_provider_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/380372217/android.share_plus.iml" filepath="$PROJECT_DIR$/.idea/modules/380372217/android.share_plus.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1631508409/android.shared_preferences_android.iml" filepath="$PROJECT_DIR$/.idea/modules/-1631508409/android.shared_preferences_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/433114997/android.url_launcher_android.iml" filepath="$PROJECT_DIR$/.idea/modules/433114997/android.url_launcher_android.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/754050376/android.webview_flutter_android.iml" filepath="$PROJECT_DIR$/.idea/modules/754050376/android.webview_flutter_android.iml" />
     </modules>
   </component>

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:junagadh_temple/app/providers/home_provider.dart';
 import 'package:junagadh_temple/app/screens/notification/notification_screen.dart';
 import 'package:junagadh_temple/app/screens/timing/timing_screen.dart';
 import 'package:junagadh_temple/app/utils/constants.dart';
+import 'package:junagadh_temple/app/utils/enums.dart';
+import 'package:junagadh_temple/app/utils/no_data_found_view.dart';
 import 'package:junagadh_temple/app/utils/sizer.dart';
 import 'package:junagadh_temple/app/views/bg_container.dart';
 import 'package:junagadh_temple/app/views/common_images.dart';
+import 'package:junagadh_temple/app/views/network_image.dart';
+import 'package:provider/provider.dart';
 
 class EventScreen extends StatefulWidget {
   const EventScreen({Key? key}) : super(key: key);
@@ -14,6 +19,15 @@ class EventScreen extends StatefulWidget {
 }
 
 class _EventScreenState extends State<EventScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      context.read<HomeProviderImpl>().getEvent();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,16 +72,47 @@ class _EventScreenState extends State<EventScreen> {
         ],
       ),
       body: BgContainer(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 20),
-           child: ListView.builder(
-              itemCount: 10,
-              padding: EdgeInsets.all(4.w),
-              itemBuilder: (context, index) {
+        child: event(),
+      ),
+    );
+  }
+
+  Widget event() {
+    final event = context.watch<HomeProviderImpl>();
+
+    if (event.resEvent?.state == Status.LOADING) {
+      return CircularProgressIndicator(
+        color: kSecondary,
+      );
+    }
+
+    final hasError = event.resEvent?.state == Status.ERROR ||
+        event.resEvent?.state == Status.UNAUTHORISED;
+
+    if (hasError) {
+      return Center(
+          child: Container(
+            child: NoDataFoundView(
+            retryCall: () {
+              context.read<HomeProviderImpl>().getEvent();
+            },
+            title: 'No Data Found'),
+      ));
+    }
+
+    final data = event.resEvent?.data;
+
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: ListView.builder(
+          itemCount: data?.length,
+          padding: EdgeInsets.all(4.w),
+          itemBuilder: (context, index) {
             return Container(
               margin: EdgeInsets.only(top: 1.h),
               padding: EdgeInsets.only(bottom: 1.h),
-              decoration:  BoxDecoration(
+              decoration: BoxDecoration(
                   border: Border(bottom: BorderSide(color: dividerColor))),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -76,8 +121,8 @@ class _EventScreenState extends State<EventScreen> {
                   Container(
                     width: 25.w,
                     height: 25.w,
-                    child: Image.network(
-                      'https://wallpaperaccess.com/full/4565288.jpg',
+                    child: CustomNetWorkImage(
+                      url: '${data?[index].data?.first.blogImage}',
                       fit: BoxFit.cover,
                     ),
                     margin: EdgeInsets.only(right: 2.w),
@@ -87,19 +132,19 @@ class _EventScreenState extends State<EventScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '15 Aug 2021',
+                          data?[index].data?.first.eventTitle ?? '-',
                           maxLines: 1,
                           style: TextStyle(
                               fontSize: 12.sp, fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          'Gurupurnima, Aashadh Sud 15',
+                          data?[index].data?.first.eventTitle ?? '-',
                           maxLines: 2,
                           style: TextStyle(
                               fontSize: 14.sp, fontWeight: FontWeight.w600),
                         ),
                         Text(
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pulvinar senectus auctor mi mauris, leo nunc consectetur. Eget nibh tortor, congue arcu. Eget malesuada donec enim ut ac ac aliquam sem nunc vel non.',
+                          data?[index].data?.first.eventDescription ?? '-',
                           maxLines: 5,
                           style: TextStyle(
                               fontSize: 12.sp, fontWeight: FontWeight.w400),
@@ -113,7 +158,7 @@ class _EventScreenState extends State<EventScreen> {
             );
           },
         ),
-      )),
+      ),
     );
   }
 }

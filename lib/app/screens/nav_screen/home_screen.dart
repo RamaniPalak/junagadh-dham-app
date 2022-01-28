@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:junagadh_temple/app/components/image_components.dart';
 import 'package:junagadh_temple/app/components/indicator_ccomponents.dart';
 import 'package:junagadh_temple/app/providers/home_provider.dart';
+import 'package:junagadh_temple/app/screens/imageview/dailydarshan_view.dart';
 import 'package:junagadh_temple/app/screens/notification/notification_screen.dart';
 import 'package:junagadh_temple/app/screens/timing/timing_screen.dart';
 import 'package:junagadh_temple/app/utils/constants.dart';
+import 'package:junagadh_temple/app/utils/enums.dart';
 import 'package:junagadh_temple/app/views/bg_container.dart';
 import 'package:junagadh_temple/app/views/common_images.dart';
 import 'package:junagadh_temple/app/utils/sizer.dart';
+import 'package:junagadh_temple/app/views/loading_small.dart';
+import 'package:junagadh_temple/app/views/network_image.dart';
 import 'dart:ui' as ui;
 
 import 'package:webview_flutter/webview_flutter.dart';
@@ -39,13 +43,13 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
   ];
 
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       context.read<HomeProviderImpl>().getSlider();
-      print('cool');
+      context.read<HomeProviderImpl>().getDailyDarshan();
+
     });
   }
 
@@ -72,8 +76,8 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: EdgeInsets.only(right: 4.w),
             child: InkWell(
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const TimingScreen()));
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => TimingScreen()));
               },
               child: SizedBox(
                 width: 5.w,
@@ -107,9 +111,9 @@ class _HomeScreenState extends State<HomeScreen> {
       child: SingleChildScrollView(
         child: SafeArea(
             child: Column(
-               crossAxisAlignment: CrossAxisAlignment.center,
-               mainAxisSize: MainAxisSize.min,
-               children: [
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
             Padding(
               padding: EdgeInsets.only(top: 2.h),
               child: BgButton(
@@ -119,39 +123,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(left :4.w,right: 4.w,top: 4.h,bottom: 4.h),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 23.w,
-                    child: MaskedImage(
-                        mask: 'assets/images/bg_mask.png',
-                        asset: 'https://wallpaperaccess.com/full/6787843.jpg'),
-                  ),
-                  SizedBox(
-                    width: 35.w,
-                    child: MaskedImage(
-                        mask: 'assets/images/bg_mask.png',
-                        asset: 'https://wallpaperaccess.com/full/6787843.jpg'),
-                  ),
-                  SizedBox(
-                    width: 23.w,
-                    child: MaskedImage(
-                        mask: 'assets/images/bg_mask.png',
-                        asset: 'https://wallpaperaccess.com/full/6787843.jpg'),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              child: Text(
-                '|| Shree Ghanshyamji Maharaj ||',
-                style: kImgTitle,
-              ),
-            ),
-                 homeSlider(),
+            dailyDarshan(),
+            homeSlider(),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 2.h),
               child: SizedBox(width: 90.w, child: designImage),
@@ -171,8 +144,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 width: 89.w,
                 height: 20.h,
                 child: const WebView(
-                  initialUrl: 'https://flutter.dev',
-                  // javascriptMode: JavascriptMode.unrestricted,
+                  allowsInlineMediaPlayback: true,
+                  initialUrl: 'https://www.youtube.com/watch?v=3CC8w2q7X30',
+                  javascriptMode: JavascriptMode.unrestricted,
                 ),
               ),
             ),
@@ -182,32 +156,36 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget homeSlider(){
-
+  Widget homeSlider() {
     final slider = context.watch<HomeProviderImpl>();
-    final data = slider.res?.data?.data;
-    print('data1:${data?.imageurl}');
 
+    if (slider.res?.state == Status.LOADING) {
+      return Center(child: LoadingSmall(color: kSecondary));
+    }
+
+    final data = slider.res?.data?.data;
 
     return Column(
       children: [
         Padding(
-          padding:  EdgeInsets.only(top: 3.h,left: 4.w,right: 4.w),
+          padding: EdgeInsets.only(top: 3.h, left: 4.w, right: 4.w),
           child: Container(
             width: 89.w,
             height: 20.h,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5)
-            ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
             child: PageView.builder(
               onPageChanged: _pageChanged,
               scrollDirection: Axis.horizontal,
               controller: _pageController,
               itemCount: data?.imageurl?.length,
               itemBuilder: (BuildContext context, int index) {
-                print(data?.imageurl?[index]); // AA vastu image ni url ma vapr vani
+                print(data
+                    ?.imageurl?[index]); // AA vastu image ni url ma vapr vani
                 return Container(
-                  child: Image.network('${data?.imageurl?[index]}'),
+                  child: CustomNetWorkImage(
+                    url: '${data?.imageurl?[index]}',
+                    fit: BoxFit.fill,
+                  ),
                 );
               },
             ),
@@ -224,4 +202,46 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget dailyDarshan() {
+    final dailyDarshan = context.watch<HomeProviderImpl>();
+
+    if (dailyDarshan.resDailyDarshan?.state == Status.LOADING) {
+      return Center(child: LoadingSmall(color: kSecondary));
+    }
+
+    final data = dailyDarshan.resDailyDarshan?.data?.data;
+
+    return Column(
+      children: [
+        GridView.builder(
+          itemCount: 3,
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, childAspectRatio: 0.6),
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => DailyDarshanView(
+                  url: data?.elementAt(index).imageurl,
+                ),));
+
+              },
+              child: Center(
+                child: CustomShapedImage(
+                  width: (index == 1) ? 33.w : 23.w,
+                  url: '${data?.elementAt(index).imageurl}',
+                ),
+              ),
+            );
+          },
+        ),
+        Container(
+          child: Text(
+            '|| ${data?.elementAt(1).name} ||',
+            style: kImgTitle,
+          ),
+        ),
+      ],
+    );
+  }
 }

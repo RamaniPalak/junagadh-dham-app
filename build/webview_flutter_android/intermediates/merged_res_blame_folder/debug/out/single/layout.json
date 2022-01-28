@@ -1,26 +1,26 @@
 [
     {
-        "merged": "/Users/softqube/Desktop/Palak/junagadh_temple/build/webview_flutter_android/intermediates/merged_res/debug/layout/notification_template_part_time.xml",
-        "source": "/Users/softqube/.gradle/caches/transforms-3/5fc8a1398f9a0d8448b6776cb6c51500/transformed/core-1.1.0/res/layout/notification_template_part_time.xml"
+        "merged": "/Users/softqube/Desktop/Palak/junagadh-dham-app/build/webview_flutter_android/intermediates/merged_res/debug/layout/notification_action_tombstone.xml",
+        "source": "/Users/softqube/.gradle/caches/transforms-3/96272f70da1055584f874a450aec6d83/transformed/core-1.6.0/res/layout/notification_action_tombstone.xml"
     },
     {
-        "merged": "/Users/softqube/Desktop/Palak/junagadh_temple/build/webview_flutter_android/intermediates/merged_res/debug/layout/notification_action.xml",
-        "source": "/Users/softqube/.gradle/caches/transforms-3/5fc8a1398f9a0d8448b6776cb6c51500/transformed/core-1.1.0/res/layout/notification_action.xml"
+        "merged": "/Users/softqube/Desktop/Palak/junagadh-dham-app/build/webview_flutter_android/intermediates/merged_res/debug/layout/notification_template_icon_group.xml",
+        "source": "/Users/softqube/.gradle/caches/transforms-3/96272f70da1055584f874a450aec6d83/transformed/core-1.6.0/res/layout/notification_template_icon_group.xml"
     },
     {
-        "merged": "/Users/softqube/Desktop/Palak/junagadh_temple/build/webview_flutter_android/intermediates/merged_res/debug/layout/notification_template_icon_group.xml",
-        "source": "/Users/softqube/.gradle/caches/transforms-3/5fc8a1398f9a0d8448b6776cb6c51500/transformed/core-1.1.0/res/layout/notification_template_icon_group.xml"
+        "merged": "/Users/softqube/Desktop/Palak/junagadh-dham-app/build/webview_flutter_android/intermediates/merged_res/debug/layout/notification_template_part_time.xml",
+        "source": "/Users/softqube/.gradle/caches/transforms-3/96272f70da1055584f874a450aec6d83/transformed/core-1.6.0/res/layout/notification_template_part_time.xml"
     },
     {
-        "merged": "/Users/softqube/Desktop/Palak/junagadh_temple/build/webview_flutter_android/intermediates/merged_res/debug/layout/notification_action_tombstone.xml",
-        "source": "/Users/softqube/.gradle/caches/transforms-3/5fc8a1398f9a0d8448b6776cb6c51500/transformed/core-1.1.0/res/layout/notification_action_tombstone.xml"
+        "merged": "/Users/softqube/Desktop/Palak/junagadh-dham-app/build/webview_flutter_android/intermediates/merged_res/debug/layout/custom_dialog.xml",
+        "source": "/Users/softqube/.gradle/caches/transforms-3/96272f70da1055584f874a450aec6d83/transformed/core-1.6.0/res/layout/custom_dialog.xml"
     },
     {
-        "merged": "/Users/softqube/Desktop/Palak/junagadh_temple/build/webview_flutter_android/intermediates/merged_res/debug/layout/notification_template_part_chronometer.xml",
-        "source": "/Users/softqube/.gradle/caches/transforms-3/5fc8a1398f9a0d8448b6776cb6c51500/transformed/core-1.1.0/res/layout/notification_template_part_chronometer.xml"
+        "merged": "/Users/softqube/Desktop/Palak/junagadh-dham-app/build/webview_flutter_android/intermediates/merged_res/debug/layout/notification_template_part_chronometer.xml",
+        "source": "/Users/softqube/.gradle/caches/transforms-3/96272f70da1055584f874a450aec6d83/transformed/core-1.6.0/res/layout/notification_template_part_chronometer.xml"
     },
     {
-        "merged": "/Users/softqube/Desktop/Palak/junagadh_temple/build/webview_flutter_android/intermediates/merged_res/debug/layout/custom_dialog.xml",
-        "source": "/Users/softqube/.gradle/caches/transforms-3/5fc8a1398f9a0d8448b6776cb6c51500/transformed/core-1.1.0/res/layout/custom_dialog.xml"
+        "merged": "/Users/softqube/Desktop/Palak/junagadh-dham-app/build/webview_flutter_android/intermediates/merged_res/debug/layout/notification_action.xml",
+        "source": "/Users/softqube/.gradle/caches/transforms-3/96272f70da1055584f874a450aec6d83/transformed/core-1.6.0/res/layout/notification_action.xml"
     }
 ]

@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:junagadh_temple/app/data/entity/res_donation.dart';
+import 'package:junagadh_temple/app/providers/home_provider.dart';
+import 'package:junagadh_temple/app/screens/donation/donation_webview.dart';
 import 'package:junagadh_temple/app/screens/notification/notification_screen.dart';
 import 'package:junagadh_temple/app/screens/timing/timing_screen.dart';
 import 'package:junagadh_temple/app/utils/constants.dart';
+import 'package:junagadh_temple/app/utils/enums.dart';
+import 'package:junagadh_temple/app/utils/no_data_found_view.dart';
 import 'package:junagadh_temple/app/utils/sizer.dart';
 import 'package:junagadh_temple/app/views/bg_container.dart';
 import 'package:junagadh_temple/app/views/common_images.dart';
+import 'package:junagadh_temple/app/views/custom_popup_view.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DonationScreen extends StatefulWidget {
   const DonationScreen({Key? key}) : super(key: key);
@@ -14,6 +22,15 @@ class DonationScreen extends StatefulWidget {
 }
 
 class _DonationScreenState extends State<DonationScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      context.read<HomeProviderImpl>().getDonation();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,8 +108,7 @@ class _DonationScreenState extends State<DonationScreen> {
                             vertical: 1.w, horizontal: 2.5.w),
                         child: Text(
                           'Donate',
-                          style:
-                              TextStyle(color: kWhite, fontSize: 14.sp),
+                          style: TextStyle(color: kWhite, fontSize: 14.sp),
                         ),
                       )
                     ],
@@ -157,8 +173,7 @@ class _DonationScreenState extends State<DonationScreen> {
                             vertical: 1.w, horizontal: 2.5.w),
                         child: Text(
                           'Donate',
-                          style:
-                          kDonateButton,
+                          style: kDonateButton,
                         ),
                       )
                     ],
@@ -186,87 +201,151 @@ class _DonationScreenState extends State<DonationScreen> {
                 ],
               ),
             ),
-            Expanded(
-              child: GridView.builder(
-                itemCount: 10,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 1.15,
-                    crossAxisSpacing: 4.w,
-                    mainAxisSpacing: 5.w),
-                itemBuilder: (context, index) {
-                  return Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            color: Colors.yellow.withOpacity(0.1), width: 1.w),
-                        color: kLightYellow),
-                    child: Container(
-                      margin: EdgeInsets.all(1.w),
-                      decoration:
-                          BoxDecoration(border: Border.all(color: kSecondary)),
-                      child: Container(
-                        margin: EdgeInsets.all(1.w),
-                        decoration: BoxDecoration(
-                            border:
-                                Border.all(color: kSecondary, width: 1.5.w)),
-                        padding: EdgeInsets.all(1.5.w),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 14.w,
-                              height: 14.w,
-                              decoration: BoxDecoration(
-                                  color: kSecondary,
-                                  borderRadius: BorderRadius.circular(14.w / 2),
-                                  border: Border.all(
-                                      color: Colors.white, width: 3)),
-                              child: Center(
-                                child: Text(
-                                  '₹\n1.5k',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 14.sp,
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ),
-                            Text(
-                              'Magaj',
-                              style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: kSecondary),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: kSecondary,
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 1.w, horizontal: 2.5.w),
-                              child: Text(
-                                'Donate',
-                                style: kDonateButton,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            )
+            donation()
           ],
         ),
       )),
+    );
+  }
+
+  Widget donation() {
+    final donation = context.watch<HomeProviderImpl>();
+    final data = donation.resDonation?.data?.data;
+
+
+    final hasError = donation.resDonation?.state == Status.ERROR ||
+        donation.resDonation?.state == Status.UNAUTHORISED;
+
+    if (hasError) {
+      return Center(
+          child: Container(
+            child: NoDataFoundView(
+                retryCall: () {
+                  context.read<HomeProviderImpl>().getDonation();
+                },
+                title: 'No Data Found'),
+          ));
+    }
+
+
+    print('donation${data?.length}');
+
+    return Container(
+      child: Expanded(
+        child: ListView.builder(
+          itemCount: data?.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: EdgeInsets.only(bottom: 8),
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(
+                        color: Colors.yellow.withOpacity(0.1), width: 1.w),
+                    color: kLightYellow),
+                child: Container(
+                  margin: EdgeInsets.all(1.w),
+                  decoration:
+                      BoxDecoration(border: Border.all(color: kSecondary)),
+                  child: Container(
+                    margin: EdgeInsets.all(1.w),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: kSecondary, width: 1.5.w)),
+                    padding:
+                        EdgeInsets.only(left: 1.w, right: 1.w, bottom: 1.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  '${data?[index].name}',
+                                  style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: kSecondary),
+                                  maxLines: 4,
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.clip,
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  data?[index].donationPrice?.isEmpty == true
+                                      ? CustomPopup(
+                                          context,
+                                          title: 'Donation',
+                                          primaryBtnTxt: 'OK',
+                                          secondaryBtnTxt: 'Cancel',
+                                          primaryAction: (p0) {
+                                            Navigator.of(context)
+                                                .push(MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DonationWebViewScreen(
+                                                url: (data?[index].url ?? '')  + p0,
+                                              ),
+                                            ));
+                                            print((data?[index].url ?? '')  + p0);
+                                          },
+                                        )
+                                      : Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                          builder: (context) =>
+                                              DonationWebViewScreen(
+                                            url: data?[index].url,
+                                          ),
+                                        ));
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.only(top: 1.h),
+                                  child: Container(
+                                    width: 23.w,
+                                    height: 6.h,
+                                    decoration: BoxDecoration(
+                                      color: kSecondary,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.only(top: 10),
+                                          child: Text(
+                                            'Donate',
+                                            style: kDonateButton,
+                                          ),
+                                        ),
+                                        Center(
+                                          child: Text(
+                                            '₹${data?[index].donationPrice ?? '-'}',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14.sp,
+                                              color: Colors.white,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }

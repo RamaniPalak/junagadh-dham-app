@@ -25,8 +25,7 @@ Widget app(){
              foregroundColor: kPrimaryColor,
             centerTitle: true,
             backwardsCompatibility: false,
-
-            titleTextStyle: TextStyle(
+          titleTextStyle: TextStyle(
                fontFamily: kRegularFonts,
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

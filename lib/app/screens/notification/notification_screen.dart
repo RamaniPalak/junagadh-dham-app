@@ -44,10 +44,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
             padding: EdgeInsets.only(right: 5.w),
             child: InkWell(
               onTap: () {
-                // Navigator.of(context)
-                //     .push(MaterialPageRoute(
-                //     builder: (context) =>
-                //         NotificationScreen()));
               },
               child: Container(
                 width: 5.w,
