@@ -26,29 +26,34 @@ double kFlexibleSize(double size) {
 final kAuthTitleStyle = TextStyle(
   color: kWhite,
   fontSize: 20.sp,
+  fontFamily: kRegularFonts,
   fontWeight: FontWeight.w500,
 );
 
 final kBgButton = TextStyle(
   color: kSecondary,
   fontSize: 16.sp,
+  fontFamily: kRegularFonts,
   fontWeight: FontWeight.w600,
 );
 
 final kImgTitle = TextStyle(
   color: kSecondary,
   fontSize: 16.sp,
+  fontFamily: kRegularFonts,
   fontWeight: FontWeight.w700,
 );
 
 final kDarshanImg = TextStyle(
   color: kSecondary,
   fontSize: 11.sp,
+  fontFamily: kRegularFonts,
   fontWeight: FontWeight.w700,
 );
 
 final kDonateButton = TextStyle(
   color: kWhite,
   fontSize: 14.sp,
+  fontFamily: kRegularFonts,
   fontWeight: FontWeight.w500,
 );

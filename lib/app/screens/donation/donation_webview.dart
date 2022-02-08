@@ -14,6 +14,8 @@ class DonationWebViewScreen extends StatefulWidget {
 
 class _DonationWebViewScreenState extends State<DonationWebViewScreen> {
 
+  bool isLoading=true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,16 +25,30 @@ class _DonationWebViewScreenState extends State<DonationWebViewScreen> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-            '',
+            'Donation',
             style: kAuthTitleStyle
         ),
       ),
+
       body: SafeArea(
         child: Container(
-            child:  WebView(
-              allowsInlineMediaPlayback: true,
-              initialUrl: widget.url,
-              javascriptMode: JavascriptMode.unrestricted,
+            child:  Stack(
+              children: [
+                WebView(
+                  allowsInlineMediaPlayback: true,
+                  initialUrl: widget.url,
+                  javascriptMode: JavascriptMode.unrestricted,
+                  onPageFinished: (finish){
+                    setState(() {
+                      isLoading = false;
+                    });
+                  },
+                ),
+                isLoading ? Center( child: CircularProgressIndicator(
+                  color: kSecondary,
+                ),)
+                    : Stack(),
+              ],
             )
         ),
       ),

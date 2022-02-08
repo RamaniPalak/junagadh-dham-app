@@ -12,5 +12,10 @@ extension SizerExt on num {
   double get w => this * SizerUtil.width / 100;
 
   /// Calculates the sp (Scalable Pixel) depending on the device's screen size
-  double get sp => this * (SizerUtil.width / 4) / 100;
+  double get sp {
+    if(SizerUtil.width == 0){
+      return this * (400 / 4) / 100;
+    }
+    return this * (SizerUtil.width / 4) / 100;
+  }
 }

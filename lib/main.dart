@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:junagadh_temple/app.dart';
-import 'package:junagadh_temple/app/screens/nav_screen/home_screen.dart';
 import 'package:junagadh_temple/providers_list.dart';
 import 'package:provider/provider.dart';
 
@@ -20,7 +19,7 @@ class MyApp extends StatelessWidget {
 
 
 Widget multiProvider(){
-  print('cool');
+
   return MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => authProvider),

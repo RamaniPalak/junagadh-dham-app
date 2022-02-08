@@ -25,7 +25,10 @@ class _GalleryScreenState extends State<GalleryScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      context.read<HomeProviderImpl>().getGallery();
+      final provider = context.read<HomeProviderImpl>();
+      if(provider.resGallery?.data == null){
+        provider.getGallery();
+      }
     });
   }
 
@@ -42,38 +45,45 @@ class _GalleryScreenState extends State<GalleryScreen> {
           style: kAuthTitleStyle,
         ),
         actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 4.w),
-            child: InkWell(
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => TimingScreen()));
-              },
-              child: Container(
-                width: 5.w,
-                height: 5.h,
-                child: clockIconImage,
+          InkWell(
+            onTap: () {
+              Navigator.of(context,rootNavigator: true).push(
+                  MaterialPageRoute(builder: (context) => TimingScreen()));
+            },
+            child: Padding(
+              padding: EdgeInsets.all(3.5.w),
+              child: Center(
+                child: SizedBox(
+                  width: 5.w,
+                  height: 5.h,
+                  child: clockIconImage,
+                ),
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(right: 5.w),
-            child: InkWell(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => NotificationScreen()));
-              },
-              child: Container(
-                width: 5.w,
-                height: 5.h,
-                child: notificationImage,
+          InkWell(
+            onTap: () {
+              Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(
+                  builder: (context) => NotificationScreen()));
+            },
+            child: Padding(
+              padding: EdgeInsets.all(3.5.w),
+              child: Center(
+                child: SizedBox(
+                  width: 5.w,
+                  height: 5.h,
+                  child: notificationImage,
+                ),
               ),
             ),
           ),
         ],
       ),
       body: BgContainer(
-        child: gallery(),
+        child: Column(
+            children: [
+              gallery(),
+            ]),
       ),
     );
   }
@@ -101,11 +111,12 @@ class _GalleryScreenState extends State<GalleryScreen> {
 
     final data = gallery.resGallery?.data?.data;
 
-    return Container(
+    return Expanded(
       child: Padding(
         padding: EdgeInsets.all(5.w),
         child: GridView.builder(
           itemCount: data?.imageurl?.length,
+          padding: EdgeInsets.only(bottom: 15.h),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 1.15,
@@ -114,7 +125,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
+                Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(
                   builder: (context) => ImageViewScreen(
                     imgIndex: data?.imageurl,
                     index: index,

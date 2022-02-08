@@ -1,5 +1,3 @@
-
-
 class ResDonation {
   ResDonation({
     this.status,
@@ -9,12 +7,12 @@ class ResDonation {
 
   int? status;
   String? message;
-  List<Datum>? data;
+  List<DonationData>? data;
 
   factory ResDonation.fromJson(Map<String, dynamic> json) => ResDonation(
     status: json["status"] == null ? null : json["status"],
     message: json["message"] == null ? null : json["message"],
-    data: json["data"] == null ? null : List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+    data: json["data"] == null ? null : List<DonationData>.from(json["data"].map((x) => DonationData.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -24,11 +22,12 @@ class ResDonation {
   };
 }
 
-class Datum {
-  Datum({
+class DonationData {
+  DonationData({
     this.id,
     this.donationPrice,
     this.url,
+    this.url1,
     this.cat,
     this.name,
   });
@@ -36,13 +35,15 @@ class Datum {
   int? id;
   String? donationPrice;
   String? url;
+  String? url1;
   String? cat;
   String? name;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory DonationData.fromJson(Map<String, dynamic> json) => DonationData(
     id: json["id"],
     donationPrice: json["donation_price"] == null ? null : json["donation_price"],
     url: json["url"] == null ? null : json["url"],
+    url1: json["url1"] == null ? null : json["url1"],
     cat: json["cat"] == null ? null : json["cat"],
     name: json["name"] == null ? null : json["name"],
   );
@@ -51,6 +52,7 @@ class Datum {
     "id": id,
     "donation_price": donationPrice == null ? null : donationPrice,
     "url": url == null ? null : url,
+    "url1": url1 == null ? null : url1,
     "cat": cat == null ? null : cat,
     "name": name == null ? null : name,
   };

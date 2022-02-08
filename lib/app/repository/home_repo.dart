@@ -3,6 +3,7 @@
 import 'package:junagadh_temple/app/data/datasource/home_data.dart';
 import 'package:junagadh_temple/app/data/entity/res_dailydarshan.dart';
 import 'package:junagadh_temple/app/data/entity/res_darshanfilter.dart';
+import 'package:junagadh_temple/app/data/entity/res_date.dart';
 import 'package:junagadh_temple/app/data/entity/res_donation.dart';
 import 'package:junagadh_temple/app/data/entity/res_event.dart';
 import 'package:junagadh_temple/app/data/entity/res_gallery.dart';
@@ -23,8 +24,12 @@ class HomeRepository{
     return await dataSource.getGallery();
   }
 
-  Future<ResDailyDarshan> getDailyDarshan() async {
+  Future<ResDate> getDailyDarshan() async {
     return await dataSource.getDailyDarshan();
+  }
+
+  Future<List<ResList>>  getDailyDarshanDate() async {
+    return await dataSource.getDailyDarshanDate();
   }
 
   Future<List<ResEvents>>  getEvent() async {
@@ -41,6 +46,10 @@ class HomeRepository{
 
   Future<ResTiming> getTimimg() async {
     return await dataSource.getTiming();
+  }
+
+  Future<String> getYoutubeUrl () async{
+    return await dataSource.getYoutubeUrl();
   }
 
 }

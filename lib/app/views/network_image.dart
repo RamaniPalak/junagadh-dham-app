@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:junagadh_temple/app/utils/constants.dart';
 
+import 'common_images.dart';
+
 class CustomNetWorkImage extends StatelessWidget {
 
   final String url;
@@ -39,7 +41,9 @@ class CustomNetWorkImage extends StatelessWidget {
               break;
             case LoadState.failed:
               // TODO: Handle this case.
-              return const Center(child: Text('No Image Found',textAlign: TextAlign.center,),);
+              return Center(child: SizedBox(
+                child: tilakImg,
+              ));
               break;
           }
         },

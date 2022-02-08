@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:junagadh_temple/app/utils/constants.dart';
+import 'package:junagadh_temple/app/utils/show_snack_bar.dart';
 
 class CustomPopup {
   final String title;
@@ -20,6 +21,7 @@ class CustomPopup {
     final size = MediaQuery.of(context).size;
 
     final textController = TextEditingController();
+
 
     showCupertinoDialog(
         context: context,
@@ -74,10 +76,10 @@ class CustomPopup {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5)),
                             child:  TextField(
+                              maxLines: 1,
                               controller: textController,
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
-                                hintText: 'Enter Amount',
+                              decoration:  InputDecoration(
                               ),
                               style: TextStyle(fontSize: 16),
                               textAlign: TextAlign.center,
@@ -119,7 +121,7 @@ class CustomPopup {
                               ),
                             ),
                           if (secondaryBtnTxt != null)
-                            SizedBox(
+                            const  SizedBox(
                               width: 10,
                             ),
                           Expanded(
@@ -130,10 +132,7 @@ class CustomPopup {
                                   borderRadius: BorderRadius.circular(10)),
                               child: TextButton(
                                 onPressed: () {
-                                  textController.text.isEmpty == true ?
-                                      throw 'Enter Amount'
-                                      : Navigator.pop(context);
-
+                                  Navigator.of(context).pop();
                                   if (primaryAction != null) {
 
                                     primaryAction!(textController.text);
@@ -141,7 +140,7 @@ class CustomPopup {
                                 },
                                 child: Text(
                                   primaryBtnTxt,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16),

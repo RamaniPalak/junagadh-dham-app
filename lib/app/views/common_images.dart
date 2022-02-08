@@ -23,6 +23,8 @@ final Image morningImage = Image.asset(imagePath + 'morning.png');
 final Image eveningImage = Image.asset(imagePath + 'evening.png');
 final Image sliderImage = Image.asset(imagePath + 'slider_img.png');
 final Image placeholderImg = Image.asset(imagePath + 'placeholder-img.png');
+final Image upiImg = Image.asset(imagePath + 'upi-icon.png');
+final Image tilakImg = Image.asset(imagePath + 'tilak.png');
 
 
 

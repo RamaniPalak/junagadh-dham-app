@@ -1,6 +1,8 @@
 
+import 'package:extended_image/extended_image.dart';
 import 'package:junagadh_temple/app/data/entity/res_dailydarshan.dart';
 import 'package:junagadh_temple/app/data/entity/res_darshanfilter.dart';
+import 'package:junagadh_temple/app/data/entity/res_date.dart';
 import 'package:junagadh_temple/app/data/entity/res_donation.dart';
 import 'package:junagadh_temple/app/data/entity/res_event.dart';
 import 'package:junagadh_temple/app/data/entity/res_gallery.dart';
@@ -26,6 +28,12 @@ class HomeProvider {
   Future getDarshanFilter({String? date}) async {}
 
   Future getTiming() async {}
+
+  Future getDailyDarshanDate() async {}
+
+  Future<String> getYoutubeUrl () async{
+    return '';
+  }
 }
 
 class HomeProviderImpl extends BaseNotifier implements HomeProvider {
@@ -41,7 +49,12 @@ class HomeProviderImpl extends BaseNotifier implements HomeProvider {
     _resDonation = ApiResponse();
     _resDarshanFilter = ApiResponse();
     _resTime = ApiResponse();
+    _resDailyDarshanDate = ApiResponse();
+    _resDarshanWithDate = ApiResponse();
+    youtubeURL = ApiResponse();
   }
+
+  ApiResponse<String>? youtubeURL;
 
   ApiResponse<ResHomeSlider>? _res;
 
@@ -51,9 +64,14 @@ class HomeProviderImpl extends BaseNotifier implements HomeProvider {
 
   ApiResponse<ResGallery>? get resGallery => _resGallery;
 
-  ApiResponse<ResDailyDarshan>? _resDailyDarshan;
+  ApiResponse<ResDate>? _resDailyDarshan;
 
-  ApiResponse<ResDailyDarshan>? get resDailyDarshan => _resDailyDarshan;
+  ApiResponse<ResDate>? get resDailyDarshan => _resDailyDarshan;
+
+
+  ApiResponse<ResDate>? _resDailyDarshanDate;
+
+  ApiResponse<ResDate>? get resDailyDarshanDate => _resDailyDarshanDate;
 
   ApiResponse<List<ResEvents>>? _resEvent;
 
@@ -63,13 +81,34 @@ class HomeProviderImpl extends BaseNotifier implements HomeProvider {
 
   ApiResponse<ResDonation>? get resDonation => _resDonation;
 
+  List<DonationData>? donationList = [];
+
   ApiResponse<ResDarshanFilter>? _resDarshanFilter;
 
   ApiResponse<ResDarshanFilter>? get resDarshanFilter => _resDarshanFilter;
 
+  ApiResponse<List<ResList>>? _resDarshanWithDate;
+
+  ApiResponse<List<ResList>>? get resDarshanWithDate => _resDarshanWithDate;
+
   ApiResponse<ResTiming>? _resTime;
 
   ApiResponse<ResTiming>? get resTime => _resTime;
+
+  List<String> donationCatList = [];
+
+
+  String? selectedValueDonation;
+
+  DonationData? selectedDonationListForCustomDonation;
+
+
+  List<String> darshanDates = [];
+
+  String selectedDates = '';
+  String selectedTithi = '';
+
+  List<ListElement>? selectedDarshan;
 
   @override
   Future getSlider() async {
@@ -113,19 +152,21 @@ class HomeProviderImpl extends BaseNotifier implements HomeProvider {
 
   @override
   Future getDailyDarshan() async {
-    try {
-      apiResIsLoading(_resDailyDarshan!);
+     try {
+      apiResIsLoading(_resDailyDarshanDate!);
 
       final res = await repo.getDailyDarshan();
 
       if (res.status != 1) {
-        apiResIsFailed(_resDailyDarshan!, res.message ?? '');
+
+        print(res.data?.date);
+        apiResIsFailed(_resDailyDarshanDate!, res.message ?? '');
       } else {
-        apiResIsSuccess(_resDailyDarshan!, res);
+        apiResIsSuccess(_resDailyDarshanDate!, res);
       }
     } catch (e) {
       print(e);
-      apiResIsFailed(_resDailyDarshan!, e.toString());
+      apiResIsFailed(_resDailyDarshanDate!, e.toString());
     }
   }
 
@@ -158,11 +199,38 @@ class HomeProviderImpl extends BaseNotifier implements HomeProvider {
         apiResIsFailed(_resDonation!, res.message ?? '');
       } else {
         apiResIsSuccess(_resDonation!, res);
+
+        donationCatList = [];
+        res.data?.forEach((element) {
+          if(!donationCatList.contains(element.cat)){
+            donationCatList.add(element.cat ?? '');
+          }
+        });
+        setDonationList(donationCatList.first);
+
+        notifyListeners();
+
       }
     } catch (e) {
       print(e);
       apiResIsFailed(_resDonation!, e.toString());
     }
+  }
+
+  setDonationList(String cat){
+    donationList = _resDonation?.data?.data?.reversed.where((element) => element.cat == cat).toList();
+
+    selectedValueDonation = cat;
+
+    selectedDonationListForCustomDonation = null;
+
+    notifyListeners();
+  }
+
+
+  setDonationType(DonationData name){
+    selectedDonationListForCustomDonation = name;
+    notifyListeners();
   }
 
   @override
@@ -202,4 +270,75 @@ class HomeProviderImpl extends BaseNotifier implements HomeProvider {
 
    }
   }
+
+  @override
+  Future getDailyDarshanDate() async {
+
+    try{
+      apiResIsLoading(_resDarshanWithDate!);
+
+      final res = await repo.getDailyDarshanDate();
+
+      if(res.first.response?.status != 1){
+        apiResIsFailed(_resDarshanWithDate!, res.first.response?.message ?? '');
+      } else {
+        apiResIsSuccess(_resDarshanWithDate!, res);
+
+        print('wow');
+        print(res.length);
+
+        darshanDates = [];
+
+        res.forEach((element) {
+          darshanDates.add(element.response?.data?.dateOfIssueFormat ?? '');
+        });
+
+        print(darshanDates);
+
+        selectedDates = darshanDates.first;
+        setDateForDarshan(selectedDates);
+        notifyListeners();
+      }
+    } catch (e){
+      print(e);
+      apiResIsFailed(_resDarshanWithDate!, e.toString());
+    }
+  }
+
+  setDateForDarshan(String date) async {
+
+    selectedDates = date;
+
+    final data = _resDarshanWithDate?.data?.where((element) => element.response?.data?.dateOfIssueFormat == date).first.response?.data;
+
+    selectedDarshan = data?.list;
+
+    selectedTithi = data?.tithi ?? '';
+
+        notifyListeners();
+
+    selectedDarshan?.forEach((element) {
+      if(element.imageurl != null){
+        getNetworkImageData(element.imageurl!, useCache: true);
+      }
+    });
+
+  }
+
+  @override
+  Future<String> getYoutubeUrl() async {
+    try {
+      apiResIsLoading(youtubeURL!);
+      final res = await repo.getYoutubeUrl();
+
+      apiResIsSuccess(youtubeURL!, res);
+
+
+      return res;
+    } on Exception catch (e) {
+      apiResIsSuccess(youtubeURL!, "https://www.youtube.com/embed/VfjQHQgTFTI");
+      return "https://www.youtube.com/embed/VfjQHQgTFTI";
+    }
+  }
+
 }

@@ -26,18 +26,22 @@ class Datum {
   Datum({
     this.name,
     this.imageurl,
+    this.thumburl
   });
 
   String? name;
   String? imageurl;
+  String? thumburl;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     name: json["Name"] == null ? null : json["Name"],
     imageurl: json["Imageurl"] == null ? null : json["Imageurl"],
+    thumburl: json["thumburl"] == null ? null : json["thumburl"]
   );
 
   Map<String, dynamic> toJson() => {
     "Name": name == null ? null : name,
     "Imageurl": imageurl == null ? null : imageurl,
+    "thumburl": thumburl == null ? null : thumburl
   };
 }

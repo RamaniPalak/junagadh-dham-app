@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:extended_image/extended_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:junagadh_temple/app/utils/constants.dart';
 import 'package:junagadh_temple/app/utils/sizer.dart';
@@ -27,6 +29,8 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
     });
   }
 
+  bool isLoading = false;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -46,27 +50,61 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
         centerTitle: true,
         title: Text('Gallery', style: kAuthTitleStyle),
         actions: [
-          InkWell(
+         (isLoading == true) ? Padding(
+           padding: const EdgeInsets.all(10),
+           child: Center(child: SizedBox(
+             height: 20,
+             width: 20,
+             child: CircularProgressIndicator(
+               color: kWhite,
+             ),
+           )),
+         )
+         : InkWell(
             onTap: () async {
-              final url = '${widget.imgIndex?[widget.index]}';
+
+              setState(() {
+                isLoading = true;
+              });
+
+               final url = '${widget.imgIndex?[widget.index]}';
+              //
+              // final dir = await getTemporaryDirectory();
+              //
+              // final uri = Uri.parse(
+              //     (dir.path) + '/' + Uri.parse(url).pathSegments.last);
+              //
+              // final list = dir.listSync();
+              //
+              // final isThere = list.where((element) => element.path == uri.path);
+              //
+              // print('isThere ${isThere}');
+              //
+              // if (isThere.isEmpty) {
+              //   await Dio().downloadUri(Uri.parse(url), uri.path);
+              //   Share.shareFiles([uri.path]);
+              // } else {
+              //   Share.shareFiles([uri.path]);
+              // }
 
               final dir = await getTemporaryDirectory();
 
               final uri = Uri.parse(
                   (dir.path) + '/' + Uri.parse(url).pathSegments.last);
 
-              final list = dir.listSync();
+              final res = await getNetworkImageData(widget.imgIndex?[widget.index] ?? '',
+                  useCache: true);
 
-              final isThere = list.where((element) => element.path == uri.path);
+              final file = File(uri.path);
 
-              print('isThere ${isThere}');
-
-              if (isThere.isEmpty) {
-                await Dio().downloadUri(Uri.parse(url), uri.path);
+              file.writeAsBytes(res!).then((value) {
                 Share.shareFiles([uri.path]);
-              } else {
-                Share.shareFiles([uri.path]);
-              }
+              });
+
+              setState(() {
+                isLoading = false;
+              });
+
             },
             child: Container(
               width: 13.w,
@@ -82,16 +120,16 @@ class _ImageViewScreenState extends State<ImageViewScreen> {
       body: BgContainer(
         child: SafeArea(
             child: PageView.builder(
-          onPageChanged: _pageChanged,
-          scrollDirection: Axis.horizontal,
-          controller: _pageController,
-          itemCount: widget.imgIndex?.length,
-          itemBuilder: (BuildContext context, int index) {
+             onPageChanged: _pageChanged,
+             scrollDirection: Axis.horizontal,
+             controller: _pageController,
+             itemCount: widget.imgIndex?.length,
+             itemBuilder: (BuildContext context, int index) {
             // AA vastu image ni url ma vapr vani
-            return InteractiveViewer(
-              minScale: 1,
-              maxScale: 4,
-              child: CustomNetWorkImage(
+              return InteractiveViewer(
+               minScale: 1,
+               maxScale: 4,
+               child: CustomNetWorkImage(
                 url: '${widget.imgIndex?[index]}',
                 fit: BoxFit.fitWidth,
               ),

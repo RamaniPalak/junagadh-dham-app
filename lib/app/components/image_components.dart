@@ -8,6 +8,7 @@ import 'dart:ui' as ui;
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:junagadh_temple/app/utils/constants.dart';
+import 'package:junagadh_temple/app/views/common_images.dart';
 
 
 // child:MaskedImage( mask: '', asset: '',)
@@ -199,7 +200,10 @@ class CustomShapedImage extends StatelessWidget {
                         break;
                       case LoadState.failed:
                       // TODO: Handle this case.
-                        return const Center(child: Text('No Image Found',textAlign: TextAlign.center,),);
+                        return Center(child: SizedBox(
+                          width: width,
+                          child: tilakImg,
+                        ));
                     }
                   },
                   fit: BoxFit.fitHeight,

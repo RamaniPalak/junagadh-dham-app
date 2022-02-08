@@ -22,36 +22,42 @@ class _NotificationScreenState extends State<NotificationScreen> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Daily Darshan',
+          'Notification',
           style: kAuthTitleStyle,
         ),
         actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 4.w),
-            child: InkWell(
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => TimingScreen()));
-              },
-              child: SizedBox(
-                width: 5.w,
-                height: 5.h,
-                child: clockIconImage,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(right: 5.w),
-            child: InkWell(
-              onTap: () {
-              },
-              child: Container(
-                width: 5.w,
-                height: 5.h,
-                child: notificationImage,
-              ),
-            ),
-          ),
+          // InkWell(
+          //   onTap: () {
+          //     Navigator.of(context,rootNavigator: true).push(
+          //         MaterialPageRoute(builder: (context) => TimingScreen()));
+          //   },
+          //   child: Padding(
+          //     padding: EdgeInsets.all(3.5.w),
+          //     child: Center(
+          //       child: SizedBox(
+          //         width: 5.w,
+          //         height: 5.h,
+          //         child: clockIconImage,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // InkWell(
+          //   onTap: () {
+          //     Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(
+          //         builder: (context) => NotificationScreen()));
+          //   },
+          //   child: Padding(
+          //     padding: EdgeInsets.all(3.5.w),
+          //     child: Center(
+          //       child: SizedBox(
+          //         width: 5.w,
+          //         height: 5.h,
+          //         child: notificationImage,
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
       body: BgContainer(

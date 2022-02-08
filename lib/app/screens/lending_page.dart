@@ -20,12 +20,7 @@ class LendingPage extends BaseStateLess{
       return Container(color: Colors.white);
     }
 
-    return DashboardScreen();
+    return TabScreen();
 
-    // if (isLogin){
-    //   return HomeScreen();
-    // }else{
-    //   return LoginScreen();
-    // }
   }
 }
