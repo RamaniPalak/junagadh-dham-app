@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
-import 'package:junagadh_temple/app/utils/api_response.dart';
-import 'package:junagadh_temple/app/utils/enums.dart';
+import 'package:junagadh/app/utils/api_response.dart';
+import 'package:junagadh/app/utils/enums.dart';
 
 class BaseNotifier extends ChangeNotifier{
 

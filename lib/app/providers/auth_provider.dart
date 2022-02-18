@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:junagadh_temple/app/utils/user_prefs.dart';
+import 'package:junagadh/app/utils/user_prefs.dart';
 
 
 class AuthProvider {

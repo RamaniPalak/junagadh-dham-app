@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:junagadh_temple/app/utils/constants.dart';
-import 'package:junagadh_temple/app/views/loading_small.dart';
+import 'package:junagadh/app/utils/constants.dart';
+import 'package:junagadh/app/views/loading_small.dart';
 
 class BaseButton extends StatelessWidget {
   final Widget? child;
@@ -102,7 +102,7 @@ class ButtonBorder extends StatelessWidget {
       child: Container(
         height: 44,
         decoration: BoxDecoration(
-            border: Border.all(color: kPrimaryColor),
+            border: Border.all(color: Colors.white),
             borderRadius:
             BorderRadius.circular((isLoading == true) ? 22.0 : 5.0)),
         child: Center(
@@ -111,7 +111,7 @@ class ButtonBorder extends StatelessWidget {
               padding: const EdgeInsets.all(10.0),
               child: (isLoading == true) ? LoadingSmall(color: kPrimaryColor,) : Text(
                 text,
-                style: TextStyle(color: kPrimaryColor, fontWeight: FontWeight.bold),
+                style: TextStyle(color: kWhite, fontWeight: FontWeight.bold),
               )
           ),
         ),

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:junagadh_temple/app/screens/timing/timing_screen.dart';
-import 'package:junagadh_temple/app/utils/constants.dart';
-import 'package:junagadh_temple/app/utils/sizer.dart';
-import 'package:junagadh_temple/app/views/bg_container.dart';
-import 'package:junagadh_temple/app/views/common_images.dart';
+import 'package:junagadh/app/screens/timing/timing_screen.dart';
+import 'package:junagadh/app/utils/constants.dart';
+import 'package:junagadh/app/utils/sizer.dart';
+import 'package:junagadh/app/views/bg_container.dart';
+import 'package:junagadh/app/views/common_images.dart';
 
 class NotificationScreen extends StatefulWidget {
   NotificationScreen({Key? key}) : super(key: key);
@@ -22,40 +22,42 @@ class _NotificationScreenState extends State<NotificationScreen> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Daily Darshan',
+          'Notification',
           style: kAuthTitleStyle,
         ),
         actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 4.w),
-            child: InkWell(
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => TimingScreen()));
-              },
-              child: SizedBox(
-                width: 5.w,
-                height: 5.h,
-                child: clockIconImage,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(right: 5.w),
-            child: InkWell(
-              onTap: () {
-                // Navigator.of(context)
-                //     .push(MaterialPageRoute(
-                //     builder: (context) =>
-                //         NotificationScreen()));
-              },
-              child: Container(
-                width: 5.w,
-                height: 5.h,
-                child: notificationImage,
-              ),
-            ),
-          ),
+          // InkWell(
+          //   onTap: () {
+          //     Navigator.of(context,rootNavigator: true).push(
+          //         MaterialPageRoute(builder: (context) => TimingScreen()));
+          //   },
+          //   child: Padding(
+          //     padding: EdgeInsets.all(3.5.w),
+          //     child: Center(
+          //       child: SizedBox(
+          //         width: 5.w,
+          //         height: 5.h,
+          //         child: clockIconImage,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // InkWell(
+          //   onTap: () {
+          //     Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(
+          //         builder: (context) => NotificationScreen()));
+          //   },
+          //   child: Padding(
+          //     padding: EdgeInsets.all(3.5.w),
+          //     child: Center(
+          //       child: SizedBox(
+          //         width: 5.w,
+          //         height: 5.h,
+          //         child: notificationImage,
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
       body: BgContainer(

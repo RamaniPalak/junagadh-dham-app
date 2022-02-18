@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:junagadh_temple/app/utils/constants.dart';
+import 'package:junagadh/app/utils/constants.dart';
 
 class BgContainer extends StatelessWidget {
   BgContainer({Key? key, this.child}) : super(key: key);

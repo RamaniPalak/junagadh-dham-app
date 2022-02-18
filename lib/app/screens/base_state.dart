@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:junagadh_temple/app/providers/auth_provider.dart';
-import 'package:junagadh_temple/app/utils/api_response.dart';
-import 'package:junagadh_temple/app/utils/constants.dart';
-import 'package:junagadh_temple/app/utils/enums.dart';
-import 'package:junagadh_temple/app/views/custom_popup_view.dart';
-import 'package:junagadh_temple/app/views/loading_small.dart';
+import 'package:junagadh/app/providers/auth_provider.dart';
+import 'package:junagadh/app/utils/api_response.dart';
+import 'package:junagadh/app/utils/constants.dart';
+import 'package:junagadh/app/utils/enums.dart';
+import 'package:junagadh/app/views/custom_popup_view.dart';
+import 'package:junagadh/app/views/loading_small.dart';
 import 'package:provider/provider.dart';
 
 abstract class BaseScreen {
@@ -13,12 +13,12 @@ abstract class BaseScreen {
       required BuildContext context,
       Function? retryCall}) {
     if (res.state == Status.UNAUTHORISED) {
-      CustomPopup(context,
-          title: 'Un-Authorised',
-          message: '${res.msg}',
-          primaryBtnTxt: 'Re-try', primaryAction: () {
-        context.read<AuthProviderImpl>().unAuthorizeUser();
-      });
+      // CustomPopup(context,
+      //     title: 'Un-Authorised',
+      //     message: '${res.msg}',
+      //     primaryBtnTxt: 'Re-try', primaryAction: () {
+      //   context.read<AuthProviderImpl>().unAuthorizeUser();
+      // });
       return false;
     } else if (res.state == Status.ERROR) {
       if (retryCall == null) {
@@ -29,8 +29,9 @@ abstract class BaseScreen {
             title: 'Sorry!',
             message: '${res.msg}',
             primaryBtnTxt: 'Re-try',
-            secondaryBtnTxt: 'Cancel',
-            primaryAction: retryCall);
+            secondaryBtnTxt: 'Cancel'
+          //  primaryAction: retryCall
+        );
       }
       return false;
     } else {

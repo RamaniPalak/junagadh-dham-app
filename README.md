@@ -1,4 +1,4 @@
-# junagadh_temple
+# junagadh
 
 A new Flutter project.
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:junagadh_temple/app/screens/base_state.dart';
+import 'package:junagadh/app/screens/base_state.dart';
 
 abstract class BasePage extends StatefulWidget {
   BasePage({Key? key}) : super(key: key);

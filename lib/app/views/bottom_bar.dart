@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:junagadh_temple/app/utils/sizer.dart';
+import 'package:junagadh/app/utils/sizer.dart';
 
 class FABBottomAppBarItem {
   FABBottomAppBarItem({this.img, this.text});

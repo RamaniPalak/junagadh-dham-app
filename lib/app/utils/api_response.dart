@@ -1,4 +1,4 @@
-import 'package:junagadh_temple/app/utils/enums.dart';
+import 'package:junagadh/app/utils/enums.dart';
 
 class ApiResponse<T> {
   Status? state;

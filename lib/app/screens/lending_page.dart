@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:junagadh_temple/app/providers/auth_provider.dart';
-import 'package:junagadh_temple/app/screens/dashboard/dashboard_screen.dart';
+import 'package:junagadh/app/providers/auth_provider.dart';
+import 'package:junagadh/app/screens/dashboard/dashboard_screen.dart';
 import 'package:provider/provider.dart';
 import 'base_state_less.dart';
 
@@ -20,12 +20,7 @@ class LendingPage extends BaseStateLess{
       return Container(color: Colors.white);
     }
 
-    return DashboardScreen();
+    return TabScreen();
 
-    // if (isLogin){
-    //   return HomeScreen();
-    // }else{
-    //   return LoginScreen();
-    // }
   }
 }
