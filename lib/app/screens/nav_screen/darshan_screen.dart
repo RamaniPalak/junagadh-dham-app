@@ -99,22 +99,22 @@ class _DarshanScreenState extends State<DarshanScreen> {
               ),
             ),
           ),
-          InkWell(
-            onTap: () {
-              Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(
-                  builder: (context) => NotificationScreen()));
-            },
-            child: Padding(
-              padding: EdgeInsets.all(3.5.w),
-              child: Center(
-                child: SizedBox(
-                  width: 5.w,
-                  height: 5.h,
-                  child: notificationImage,
-                ),
-              ),
-            ),
-          ),
+          // InkWell(
+          //   onTap: () {
+          //     Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(
+          //         builder: (context) => NotificationScreen()));
+          //   },
+          //   child: Padding(
+          //     padding: EdgeInsets.all(3.5.w),
+          //     child: Center(
+          //       child: SizedBox(
+          //         width: 5.w,
+          //         height: 5.h,
+          //         child: notificationImage,
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
       body: BgContainer(
